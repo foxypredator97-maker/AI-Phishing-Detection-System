@@ -1,39 +1,31 @@
-import joblib
 import pandas as pd
+import joblib
 
 from utils.feature_extractor import extract_features
-from utils.trust_score import calculate_trust_score
 
 # Load model
 model = joblib.load("model/phishing_model.pkl")
 
 # Test URL
-url = "https://paypal-secure-login.xyz"
+url = "https://google.com"
 
 # Extract features
 features = extract_features(url)
 
-# Convert to DataFrame
+# Convert to dataframe
 df = pd.DataFrame([features])
 
-# Predict
+# Prediction
 prediction = model.predict(df)[0]
 
-# Trust Score
-score = calculate_trust_score({
-    "url_length": features["url_length"],
-    "https": features["isHttps"],
-    "has_at": features["at_symbol"],
-    "dot_count": features["nb_dots"],
-    "suspicious_keywords": features["sensitive_words_count"],
-    "has_hyphen": features["nb_hyphens"]
-})
+# Probability
+probability = model.predict_proba(df)[0]
 
-print("\nURL:", url)
+print("URL:", url)
+print("Prediction:", prediction)
+print("Probabilities:", probability)
 
 if prediction == 1:
-    print("⚠️ PHISHING WEBSITE DETECTED")
+    print("LEGITIMATE WEBSITE")
 else:
-    print("✅ LEGITIMATE WEBSITE")
-
-print("Trust Score:", score, "/100")
+    print("PHISHING WEBSITE")

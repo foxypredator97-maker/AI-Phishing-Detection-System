@@ -43,9 +43,9 @@ def analyze():
 
     # AI Result
     if prediction == 1:
-        result = "PHISHING WEBSITE"
-    else:
         result = "LEGITIMATE WEBSITE"
+    else:
+        result = "PHISHING WEBSITE"
 
     # Final Security Verdict
     if score >= 85:

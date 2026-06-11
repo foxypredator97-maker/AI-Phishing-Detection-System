@@ -42,3 +42,5 @@ print("Model Accuracy:", round(accuracy * 100, 2), "%")
 joblib.dump(model, "model/phishing_model.pkl")
 
 print("Model saved successfully!")
+print("Label Distribution:")
+print(y.value_counts())
